@@ -17,7 +17,6 @@ router.get('/', function (req, res, next) {
         limit: config.pagination,
         offset: (page - 1) * config.pagination
     }).then(function (data) {
-        console.log(data);
         var totalPage = Math.ceil(data.count / config.pagination);
         res.render('index',
             {

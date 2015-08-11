@@ -15,9 +15,10 @@ var flash = require('connect-flash');
 var methodOverride = require('method-override');
 var pagination = require('./custom_filter/pagination');
 var passport = require('passport');
+var config = require('./config');
 
 
-global.db = new Sequelize("postgres://quoccuong:@localhost:5432/quoccuong");
+global.db = new Sequelize(config.db.database, config.db.username, config.db.password, config.db);
 
 db['user'] = db.import(__dirname + '/models/user.js');
 db['post'] = db.import(__dirname + '/models/post.js');
@@ -51,6 +52,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./passport')(passport);
+
 app.use(expressValidator({
     errorFormatter: function (param, msg, value) {
         var namespace = param.split('.')
