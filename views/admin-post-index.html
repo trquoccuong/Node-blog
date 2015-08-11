@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block cssExtends %}
+    <link href="/plugin/Trumbowyg/dist/ui/trumbowyg.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block menu %}
+    {% include 'admin-menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Welcome to Manager view</h1>
+                        <hr class="small">
+                        <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+                {% if errors %}
+                    {% for error in errors %}
+                        <div class="alert alert-danger">{{ error.msg }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% if delete %}
+                    <form method="POST" action="?_method=DELETE">
+                        <button class="btn btn-danger pull-right" type="submit">Delete</button>
+                    </form>
+                {% endif %}
+                <form method="POST">
+                    <div class="form-group">
+                        <a class="btn btn-default" href="/users/posts">Back</a>
+                        <button class="btn btn-default" type="submit">Save</button>
+                    </div>
+                    <div class="form-group">
+                        Title: <input name="title" class="input-group" style="width: 100%" value="{{ title }}"/>
+                    </div>
+                    <div class="form-group">
+                        Description:
+                        <div id="post-description">{{ description }}</div>
+                    </div>
+                    <div class="form-group">
+                        Content:
+                        <div id="post-content">{{ content }}</div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block jsExtends %}
+    <script src="/plugin/Trumbowyg/dist/trumbowyg.min.js"></script>
+    <script>
+        $(function () {
+            $('#post-description').trumbowyg();
+            $('#post-content').trumbowyg();
+        })
+    </script>
+{% endblock %}
